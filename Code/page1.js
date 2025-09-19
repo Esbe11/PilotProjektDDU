@@ -3,12 +3,15 @@ function setup() {
 }
 
 playerX = 800
-playerY = 572
+playerY = 620
+
+function preload() {
+background1 = loadImage('Images/backgroundPage1.png');
+}
 
 function draw() {
   background(200);
-
-  text("Page 1", width/2, height/2);
+  image(background1, 0, 0, 1600, 800);
 
   circle(playerX, playerY, 50);
 
