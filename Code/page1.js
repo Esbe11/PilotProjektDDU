@@ -1,26 +1,44 @@
 function setup() {
   createCanvas(1600, 800);
-  background(200);
 }
 
-playerX = 100
-playerY = 100
+playerX = 800
+playerY = 572
 
 function draw() {
+  background(200);
+
   text("Page 1", width/2, height/2);
 
   circle(playerX, playerY, 50);
 
-  if (keyIsDown(keyCode(87))){
+  //Player Movement
+  if (keyIsDown(87) === true){
     playerY -= 5
   }
-  if (keyIsDown(keyCode(83))){
+  if (keyIsDown(83) === true){
     playerY += 5
   }
-  if (keyIsDown(keyCode(65))){
+  if (keyIsDown(65) === true){
     playerX -= 5
   }
-  if (keyIsDown(keyCode(68))){
+  if (keyIsDown(68) === true){
     playerX += 5
+  }
+
+  //Road Boundaries
+  if (playerY > height){
+    playerY = 800;
+  }
+  if(playerY < 456){
+    playerY = 456;
+  }
+
+  //Page Transition
+  if (playerX > width){
+    window.location.href = "page2.html"
+  }
+  if (playerX < 0){
+    window.location.href = "page3.html"
   }
 }
