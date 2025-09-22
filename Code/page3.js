@@ -2,9 +2,6 @@ function setup() {
   createCanvas(1600, 800);
 }
 
-playerX = 800
-playerY = 620
-
 questX = 600
 questY = 400
 
@@ -18,11 +15,9 @@ let buttonOptionA;
 let buttonOptionB;
 let buttonVisible = false; 
 
-page3MiniChoice = ""
-page3Choice = 0
-
 function preload() {
 background3 = loadImage('Images/backgroundPage3.png');
+minimap3 = loadImage('Images/minimapPage3.png');
 questBarrel = loadImage('Images/Trashcan.png');
 questItem = loadImage('Images/Blanket.png');
 }
@@ -55,27 +50,13 @@ function draw() {
   background(200);
   image(background3, 0, 0, 1600, 800);
 
-  //Player Movement
-  if (keyIsDown(87) === true || keyIsDown(38) === true){
-    playerY -= 5
-  }
-  if (keyIsDown(83) === true || keyIsDown(40) === true){
-    playerY += 5
-  }
-  if (keyIsDown(65) === true || keyIsDown(37) === true){
-    playerX -= 5
-  }
-  if (keyIsDown(68) === true || keyIsDown(39) === true){
-    playerX += 5
-  }
+  image(minimap3, 1135, 5, 306*1.5, 54*1.5);
+
+  fill(255, 0, 0);
+  triangle(1365, 50, 1380, 35, 1350, 35)
 
   //Road Boundaries (Y)
-  if (playerY > height){
-    playerY = 800;
-  }
-  if(playerY < 456){
-    playerY = 456;
-  }
+  roadBoundaries();
 
   //Page Transition
   if (playerX > width){
@@ -89,7 +70,7 @@ function draw() {
   fill(255)
   square(questX, questY, 50);
 
-  //Quest Emotion
+  //Quest Emotion:
 
   //Question Mark
   if (page3MiniChoice === ""){
@@ -162,60 +143,9 @@ function draw() {
     }
   }
 
-  fill(255);
-  circle(playerX, playerY, 50);
+  //Player and Movement
+  playerMovement();
 
   //Quest Interaction
-   if (dist(playerX, playerY, questX+25, questY+25) < 50){
-    if (!buttonVisible && page3MiniChoice === "") {
-      buttonOptionA = createButton('Sure, I can help you');
-      buttonOptionA.position(width/2-160, 500);
-      buttonOptionA.mousePressed(() => page3MiniChoice = true);
-      buttonOptionB = createButton('No thanks, Mister');
-      buttonOptionB.position(width/2+40, 500);
-      buttonOptionB.mousePressed(() => page3MiniChoice = false);
-      buttonVisible = true;
-    }
-    if(page3MiniChoice !== ""){
-      buttonOptionA.remove();
-      buttonOptionB.remove();
-      buttonVisible = false;
-    }
-
-    fill(255, 255, 255, 240)
-    rect(400, 200, 800, 400);
-    textSize(25)
-    fill(0)
-
-    fill(0, 0, 0, 150)
-    textSize(20)
-    strokeWeight(0)
-    text("Move away from this npc to close the menu.", 580, 590);
-
-    fill(0, 0, 0, 255)
-    textSize(25)
-    strokeWeight(1)
-    if(page3MiniChoice === ""){
-      textBox1();
-    }
-    if(page3MiniChoice === false){
-      textBox2();
-      page3Choice = "bad"
-    }
-    if(page3MiniChoice === true){
-      textBox3();
-    }
-    if(page3MiniChoice === "complete"){
-      textBox4();
-      page3Choice = "good"
-    }
-  
-  }
-  else {
-    if (buttonVisible) {
-      buttonOptionA.remove();
-      buttonOptionB.remove();
-      buttonVisible = false;
-    }
-  }
+  npcTextbox('page3MiniChoice', 'page3Choice');
 }

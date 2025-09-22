@@ -2,40 +2,25 @@ function setup() {
   createCanvas(1600, 800);
 }
 
-playerX = 800
-playerY = 620
-
 function preload() {
 background1 = loadImage('Images/backgroundPage1.png');
+minimap1 = loadImage('Images/minimapPage1.png');
 }
 
 function draw() {
   background(200);
   image(background1, 0, 0, 1600, 800);
 
-  circle(playerX, playerY, 50);
+  image(minimap1, 1135, 5, 306*1.5, 54*1.5);
 
-  //Player Movement
-  if (keyIsDown(87) === true){
-    playerY -= 5
-  }
-  if (keyIsDown(83) === true){
-    playerY += 5
-  }
-  if (keyIsDown(65) === true){
-    playerX -= 5
-  }
-  if (keyIsDown(68) === true){
-    playerX += 5
-  }
+  fill(255, 0, 0);
+  triangle(1365, 50, 1380, 35, 1350, 35)
 
-  //Road Boundaries
-  if (playerY > height){
-    playerY = 800;
-  }
-  if(playerY < 456){
-    playerY = 456;
-  }
+  //Player and Movement
+  playerMovement();
+
+  //Road Boundaries (Y)
+  roadBoundaries();
 
   //Page Transition
   if (playerX > width){
