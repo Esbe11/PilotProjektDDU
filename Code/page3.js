@@ -8,11 +8,11 @@ playerY = 620
 questX = 600
 questY = 400
 
-questItemX = 1550
-questItemY = 500
+questItemX = 1530
+questItemY = 440
 
-questBarrelX = 1550
-questBarrelY = 460
+questBarrelX = 1520
+questBarrelY = 435
 
 let buttonOptionA;
 let buttonOptionB;
@@ -23,6 +23,8 @@ page3Choice = 0
 
 function preload() {
 background3 = loadImage('Images/backgroundPage3.png');
+questBarrel = loadImage('Images/Trashcan.png');
+questItem = loadImage('Images/Blanket.png');
 }
 
 function textBox1(){
@@ -54,20 +56,20 @@ function draw() {
   image(background3, 0, 0, 1600, 800);
 
   //Player Movement
-  if (keyIsDown(87) === true){
+  if (keyIsDown(87) === true || keyIsDown(38) === true){
     playerY -= 5
   }
-  if (keyIsDown(83) === true){
+  if (keyIsDown(83) === true || keyIsDown(40) === true){
     playerY += 5
   }
-  if (keyIsDown(65) === true){
+  if (keyIsDown(65) === true || keyIsDown(37) === true){
     playerX -= 5
   }
-  if (keyIsDown(68) === true){
+  if (keyIsDown(68) === true || keyIsDown(39) === true){
     playerX += 5
   }
 
-  //Road Boundaries
+  //Road Boundaries (Y)
   if (playerY > height){
     playerY = 800;
   }
@@ -87,26 +89,76 @@ function draw() {
   fill(255)
   square(questX, questY, 50);
 
-  //Quest Item
-  
+  //Quest Emotion
+
+  //Question Mark
+  if (page3MiniChoice === ""){
+    fill(255, 255, 0);
+    stroke(0)
+    strokeWeight(2)
+    textSize(30)
+    text("?", questX+16, questY-10);
+  }
+
+  //Dot, dot, dot
+  if (page3MiniChoice === true && page3Choice === 0){
+    fill(255, 255, 0);
+    stroke(0)
+    strokeWeight(2)
+    textSize(30)
+    text("...", questX+12, questY-10);
+  }
+
+  //Exclamation Mark
+  if (page3MiniChoice === "complete" && page3Choice === 0){
+    fill(255, 255, 0);
+    stroke(0)
+    strokeWeight(2)
+    textSize(30)
+    text("!", questX+20, questY-10);
+  }
+
+  //Happy Face
+  if (page3Choice === "good"){
+    fill(255, 255, 0);
+    stroke(0)
+    strokeWeight(2)
+    circle(questX+15, questY-25, 10);
+    circle(questX+35, questY-25, 10);
+    noFill()
+    arc(questX+25, questY-15, 30, 15, 0, PI);
+  }
+
+  //Sad Face
+  if (page3Choice === "bad"){
+    fill(255, 255, 0);
+    stroke(0)
+    strokeWeight(2)
+    circle(questX+15, questY-25, 10);
+    circle(questX+35, questY-25, 10);
+    noFill()
+    arc(questX+25, questY-5, 30, 15, PI, 0);
+  }
+
+  strokeWeight(1)
 
   //Quest Item (Blanket)
   if (page3MiniChoice === true){
     fill(255, 0, 0);
-  triangle(questItemX, questItemY, questItemX+30, questItemY, questItemX+15, questItemY-30);
+    image(questItem, questItemX, questItemY, 54, 83);
   }
-  if (page3MiniChoice === true && dist(playerX, playerY, questItemX+15, questItemY-15) < 35){
+  if (page3MiniChoice === true && dist(playerX, playerY, questItemX+27, questItemY+41.5) < 40){
     page3MiniChoice = "complete"
   }
   
   //Quest Hider (Barrel)
   fill(0)
-  rect(questBarrelX, questBarrelY, 30, 50);
+  image(questBarrel, questBarrelX, questBarrelY, 68, 90);
 
-  if (page3MiniChoice === true && dist(playerX, playerY, questItemX+15, questItemY-15) < 150){
-    questBarrelX -= 1
-    if (questBarrelX < 1500){
-      questBarrelX = 1500
+  if (page3MiniChoice === true && dist(playerX, playerY, questItemX+34, questItemY+45) < 150){
+    questBarrelX -= 1.5
+    if (questBarrelX < 1450){
+      questBarrelX = 1450
     }
   }
 
@@ -117,10 +169,10 @@ function draw() {
    if (dist(playerX, playerY, questX+25, questY+25) < 50){
     if (!buttonVisible && page3MiniChoice === "") {
       buttonOptionA = createButton('Sure, I can help you');
-      buttonOptionA.position(width/2-100, 500);
+      buttonOptionA.position(width/2-160, 500);
       buttonOptionA.mousePressed(() => page3MiniChoice = true);
       buttonOptionB = createButton('No thanks, Mister');
-      buttonOptionB.position(width/2+100, 500);
+      buttonOptionB.position(width/2+40, 500);
       buttonOptionB.mousePressed(() => page3MiniChoice = false);
       buttonVisible = true;
     }
@@ -134,6 +186,15 @@ function draw() {
     rect(400, 200, 800, 400);
     textSize(25)
     fill(0)
+
+    fill(0, 0, 0, 150)
+    textSize(20)
+    strokeWeight(0)
+    text("Move away from this npc to close the menu.", 580, 590);
+
+    fill(0, 0, 0, 255)
+    textSize(25)
+    strokeWeight(1)
     if(page3MiniChoice === ""){
       textBox1();
     }
