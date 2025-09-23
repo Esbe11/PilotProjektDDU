@@ -27,28 +27,47 @@ function playerMovement(){
     }
 }
 
+function setMiniChoice(miniChoiceVarName, val) {
+  window[miniChoiceVarName] = String(val);
+  localStorage.setItem(miniChoiceVarName, String(val));
+}
+
+function setChoice(choiceVarName, val) {
+  window[choiceVarName] = val;
+  localStorage.setItem(choiceVarName, val);
+}
+
+function getMiniChoice(miniChoiceVarName) {
+  const val = localStorage.getItem(miniChoiceVarName);
+  return val !== null ? val : "";
+}
+
+function getChoice(choiceVarName) {
+  return localStorage.getItem(choiceVarName) || 0;
+}
+
 //Quest Interaction
 function npcTextbox(miniChoiceVarName, choiceVarName) {
   let pageMiniChoice = window[miniChoiceVarName];
   let pageChoice = window[choiceVarName];
 
-  if (dist(playerX, playerY, questX+25, questY+25) < 50) {
-    if (!buttonVisible && pageMiniChoice === "") {
+  if (dist(playerX, playerY, questX+25, questY+25) < 100) {
+    if (!buttonVisible && (pageMiniChoice === "" || pageMiniChoice === undefined)) {
       buttonOptionA = createButton('Sure, I can help you');
       buttonOptionA.position(width/2-160, 500);
-      buttonOptionA.mousePressed(() => { window[miniChoiceVarName] = true; });
+      buttonOptionA.mousePressed(() => { setMiniChoice(miniChoiceVarName, "true"); });
       buttonOptionB = createButton('No thanks, Mister');
       buttonOptionB.position(width/2+40, 500);
-      buttonOptionB.mousePressed(() => { window[miniChoiceVarName] = false; });
+      buttonOptionB.mousePressed(() => { setMiniChoice(miniChoiceVarName, "false"); });
       buttonVisible = true;
     }
     if(pageMiniChoice !== ""){
-      buttonOptionA.remove();
-      buttonOptionB.remove();
+      if (buttonOptionA) buttonOptionA.remove();
+      if (buttonOptionB) buttonOptionB.remove();
       buttonVisible = false;
     }
 
-fill(255, 255, 255, 240)
+    fill(255, 255, 255, 240)
     rect(400, 200, 800, 400);
     textSize(25)
     fill(0)
@@ -64,28 +83,22 @@ fill(255, 255, 255, 240)
     if(pageMiniChoice === ""){
       textBox1();
     }
-    if(pageMiniChoice === false){
+    if(pageMiniChoice === "false"){
       textBox2();
-      window[choiceVarName] = "bad";
+      setChoice(choiceVarName, "bad");
     }
-    if(pageMiniChoice === true){
+    if(pageMiniChoice === "true"){
       textBox3();
     }
     if(pageMiniChoice === "complete"){
       textBox4();
-      window[choiceVarName] = "good";
+      setChoice(choiceVarName, "good");
     }
   } else {
     if (buttonVisible) {
-      buttonOptionA.remove();
-      buttonOptionB.remove();
+      if (buttonOptionA) buttonOptionA.remove();
+      if (buttonOptionB) buttonOptionB.remove();
       buttonVisible = false;
     }
   }
 }
-
-
-
-
-
-

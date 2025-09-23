@@ -11,11 +11,18 @@ function setup() {
 }
 
 function changePageToA(){
-    window.location.href = "page1.html";
+  localStorage.setItem('page1MiniChoice', "");
+  localStorage.setItem('page1Choice', 0);
+  localStorage.setItem('page2MiniChoice', "");
+  localStorage.setItem('page2Choice', 0);
+  localStorage.setItem('page3MiniChoice', "");
+  localStorage.setItem('page3Choice', 0);
+
+  window.location.href = "page1.html";
 }
 
 function changePageToB(){
-    window.location.href = "tutorial.html";
+  window.location.href = "tutorial.html";
 }
 
 function draw() {
