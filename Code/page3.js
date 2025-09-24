@@ -90,7 +90,7 @@ function draw() {
   }
 
   // Dot, dot, dot
-  if (window.page3MiniChoice === "true" && window.page3Choice === undefined) {
+  if (window.page3MiniChoice === "true" && window.page3Choice === "0") {
     fill(255, 255, 0);
     stroke(0)
     strokeWeight(2)
@@ -99,7 +99,7 @@ function draw() {
   }
 
   // Exclamation Mark
-  if (window.page3MiniChoice === "complete" && window.page3Choice === undefined) {
+  if (window.page3MiniChoice === "complete" && window.page3Choice === "0") {
     fill(255, 255, 0);
     stroke(0)
     strokeWeight(2)
@@ -156,4 +156,7 @@ function draw() {
 
   //Quest Interaction
   npcTextbox('page3MiniChoice', 'page3Choice');
+
+  //Win Check
+  winCheck();
 }

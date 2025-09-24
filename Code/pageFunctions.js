@@ -1,4 +1,7 @@
 //Road boundaries (Y)
+playerX = 800
+playerY = 620
+
 function roadBoundaries(){
   if (playerY > height){
     playerY = 800;
@@ -99,6 +102,20 @@ function npcTextbox(miniChoiceVarName, choiceVarName) {
       if (buttonOptionA) buttonOptionA.remove();
       if (buttonOptionB) buttonOptionB.remove();
       buttonVisible = false;
+    }
+  }
+}
+
+function winCheck() {
+  let page1Choice = getChoice('page1Choice');
+  let page2Choice = getChoice('page2Choice');
+  let page3Choice = getChoice('page3Choice');
+  if ((page1Choice === "good" || page1Choice === "bad") && (page2Choice === "good" || page2Choice === "bad") && (page3Choice === "good" || page3Choice === "bad")) {
+    fill(0, 255, 0,)
+    strokeWeight(3)
+    rect(width/2-25, height/2+195, 50, 50);
+    if (dist(playerX, playerY, width/2, height/2+220) < 50) {
+      window.location.href = "endScreen.html";
     }
   }
 }
