@@ -2,14 +2,11 @@ function setup() {
   createCanvas(1600, 800);
 }
 
-questX = 600
-questY = 400
+questX = 850
+questY = 350
 
-questItemX = 1530
-questItemY = 440
-
-questBarrelX = 1520
-questBarrelY = 435
+questItemX = 135
+questItemY = 125
 
 buttonOptionA = undefined;
 buttonOptionB = undefined;
@@ -25,34 +22,37 @@ if (window.page2Choice === undefined) {
 function preload() {
 background2 = loadImage('Images/backgroundPage2.png');
 minimap2 = loadImage('Images/minimapPage2.png');
-questBarrel = loadImage('Images/Trashcan.png');
 questItem = loadImage('Images/Cat.png');
+questItem2 = loadImage('Images/CatFalling.png');
 questGiver = loadImage('Images/Grandma.png');
 questGiverHappy = loadImage('Images/GrandmaCat.png');
+player = loadImage('Images/Player.png');
+playerUp = loadImage('Images/PlayerUp.png');
+playerLeft = loadImage('Images/PlayerLeft.png');
 }
 
 function textBox1(){
-  text("Hey you. I need your help!", 405, 230);
-  text("I lost my blanket somewhere around here.", 405, 270);
-  text("Could you help me find it?", 405, 310);
-  text("If I don't find it soon, I won't be able to sleep tonight...", 405, 350);
-  text("Please help me, dear stranger.", 405, 390);
+  text("Hello there, my child.", 405, 230);
+  text("My cat ran away from me.", 405, 270);
+  text("She is just a little kitten.", 405, 310);
+  text("She can't live by herself in the wild..", 405, 350);
+  text("Would you please help me get her home, my dear child?", 405, 390);
 }
 function textBox2(){
-  text("Well now I am gonna be cold at night...", 405, 230);
-  text("I guess you are just a selfish person.", 405, 270);
-  text("Goodbye.", 405, 310);
+  text("Well I guess you are just a busy little person.", 405, 230);
+  text("I hope she can find her way home anyway...", 405, 270);
+  text("Goodbye, little one.", 405, 310);
 }
 function textBox3(){
-  text("Thank you so much! You're very kind.", 405, 230);
-  text("I believe it was somewhere around the tall gray building to the east.", 405, 270);
-  text("Good luck finding it!", 405, 310);
-  text("Thank you again, kind stranger!", 405, 350);
+  text("Thank you my child, you are very kind.", 405, 230);
+  text("I believe she might have climbed up that tall tree to the west.", 405, 270);
+  text("Good luck finding her.", 405, 310);
+  text("Thank you again, little one.", 405, 350);
 }
 function textBox4(){
-  text("You found it! Thank you so much!", 405, 230);
-  text("Now I can finally sleep well tonight.", 405, 270);
-  text("You are a true hero!", 405, 310);
+  text("You found her! Thank you so, so much!", 405, 230);
+  text("Now I can get her fed when we get back inside.", 405, 270);
+  text("You are my little hero.", 405, 310);
 }
 
 function draw() {
@@ -76,8 +76,13 @@ function draw() {
   }
 
   //Quest Giver
-  fill(255)
-  image(questGiver, questX-4, questY, 57, 81);
+  if (window.page2MiniChoice === "complete" && window.page2Choice === "good") {
+    image(questGiverHappy, questX-4, questY, 75, 124.5);
+  }
+  else{
+    image(questGiver, questX-4, questY, 75, 124.5);
+  }
+  
 
   //Quest Emotion:
 
@@ -132,25 +137,24 @@ function draw() {
 
   strokeWeight(1)
 
-  // Quest Item (Blanket)
-  if (window.page2MiniChoice === "true") {
-    fill(255, 0, 0);
-    image(questItem, questItemX, questItemY, 54, 83);
+  // Quest Item (Cat)
+  if (window.page2MiniChoice === "true" && questItemY < 130) {
+    image(questItem, questItemX, questItemY, 48, 37.5);
   }
-  if (window.page2MiniChoice === "true" && dist(playerX, playerY, questItemX+27, questItemY+41.5) < 40) {
-    setMiniChoice('page2MiniChoice', "complete");
+  if (window.page2MiniChoice === "true" && questItemY > 130) {
+    image(questItem2, questItemX, questItemY, 42, 55.5);
   }
-  
-  //Quest Hider (Barrel)
-  fill(0)
-  image(questBarrel, questBarrelX, questBarrelY, 68, 90);
 
-  if (window.page2MiniChoice === "true" && dist(playerX, playerY, questItemX+34, questItemY+45) < 150) {
-    questBarrelX -= 1.5
-    if (questBarrelX < 1450){
-      questBarrelX = 1450
+  if (window.page2MiniChoice === "true" && playerX - questItemX <75){
+    questItemY += 7.5
+    if(questItemY > 700){
+      questItemY = 700
     }
   }
+
+  if(dist(questItemX+24, questItemY+18.75, playerX+25, playerY+40.5) < 50){
+      setMiniChoice('page2MiniChoice', "complete");
+  } 
 
   //Player and Movement
   playerMovement();

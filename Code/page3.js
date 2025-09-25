@@ -3,7 +3,7 @@ function setup() {
 }
 
 questX = 600
-questY = 400
+questY = 360
 
 questItemX = 1530
 questItemY = 440
@@ -28,6 +28,10 @@ minimap3 = loadImage('Images/minimapPage3.png');
 questBarrel = loadImage('Images/Trashcan.png');
 questItem = loadImage('Images/Blanket.png');
 questGiver = loadImage('Images/HomelessMan.png');
+questGiverHappy = loadImage('Images/HomelessManBlanket.png');
+player = loadImage('Images/Player.png');
+playerUp = loadImage('Images/PlayerUp.png');
+playerLeft = loadImage('Images/PlayerLeft.png');
 }
 
 function textBox1(){
@@ -75,8 +79,12 @@ function draw() {
   }
 
   //Quest Giver
-  fill(255)
-  image(questGiver, questX-4, questY, 57, 81);
+  if (window.page3MiniChoice === "complete" && window.page3Choice === "good") {
+    image(questGiverHappy, questX-4, questY, 57*1.3, 81*1.3);
+  }
+  else{
+    image(questGiver, questX-4, questY, 57*1.3, 81*1.3);
+  }
 
   //Quest Emotion:
 
@@ -86,7 +94,7 @@ function draw() {
     stroke(0)
     strokeWeight(2)
     textSize(30)
-    text("?", questX+16, questY-10);
+    text("?", questX+23.5, questY-10);
   }
 
   // Dot, dot, dot
@@ -95,7 +103,7 @@ function draw() {
     stroke(0)
     strokeWeight(2)
     textSize(30)
-    text("...", questX+12, questY-10);
+    text("...", questX+19.5, questY-10);
   }
 
   // Exclamation Mark
@@ -104,7 +112,7 @@ function draw() {
     stroke(0)
     strokeWeight(2)
     textSize(30)
-    text("!", questX+20, questY-10);
+    text("!", questX+27.5, questY-10);
   }
 
   //Happy Face
@@ -112,10 +120,10 @@ function draw() {
     fill(255, 255, 0);
     stroke(0)
     strokeWeight(2)
-    circle(questX+15, questY-25, 10);
-    circle(questX+35, questY-25, 10);
+    circle(questX+22.5, questY-25, 10);
+    circle(questX+42.5, questY-25, 10);
     noFill()
-    arc(questX+25, questY-15, 30, 15, 0, PI);
+    arc(questX+32.5, questY-15, 30, 15, 0, PI);
   }
 
   //Sad Face
@@ -123,17 +131,16 @@ function draw() {
     fill(255, 255, 0);
     stroke(0)
     strokeWeight(2)
-    circle(questX+15, questY-25, 10);
-    circle(questX+35, questY-25, 10);
+    circle(questX+22.5, questY-25, 10);
+    circle(questX+42.5, questY-25, 10);
     noFill()
-    arc(questX+25, questY-5, 30, 15, PI, 0);
+    arc(questX+32.5, questY-5, 30, 15, PI, 0);
   }
 
   strokeWeight(1)
 
   // Quest Item (Blanket)
   if (window.page3MiniChoice === "true") {
-    fill(255, 0, 0);
     image(questItem, questItemX, questItemY, 54, 83);
   }
   if (window.page3MiniChoice === "true" && dist(playerX, playerY, questItemX+27, questItemY+41.5) < 40) {
@@ -141,7 +148,6 @@ function draw() {
   }
   
   //Quest Hider (Barrel)
-  fill(0)
   image(questBarrel, questBarrelX, questBarrelY, 68, 90);
 
   if (window.page3MiniChoice === "true" && dist(playerX, playerY, questItemX+34, questItemY+45) < 150) {

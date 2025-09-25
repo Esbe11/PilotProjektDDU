@@ -2,14 +2,14 @@ function setup() {
   createCanvas(1600, 800);
 }
 
-questX = 600
-questY = 400
+questX = 985
+questY = 380
 
-questItemX = 1530
-questItemY = 440
+questItemX = 100
+questItemY = 410
 
-questBarrelX = 1520
-questBarrelY = 435
+questBoulderX = 80
+questBoulderY = 390
 
 buttonOptionA = undefined;
 buttonOptionB = undefined;
@@ -25,33 +25,37 @@ if (window.page1Choice === undefined) {
 function preload() {
 background1 = loadImage('Images/backgroundpage1.png');
 minimap1 = loadImage('Images/minimappage1.png');
-questBarrel = loadImage('Images/Trashcan.png');
+questBoulder = loadImage('Images/Boulder.png');
 questItem = loadImage('Images/Backpack.png');
 questGiver = loadImage('Images/SchoolKid.png');
+questGiverHappy = loadImage('Images/SchoolKidBackpack.png');
+player = loadImage('Images/Player.png');
+playerUp = loadImage('Images/PlayerUp.png');
+playerLeft = loadImage('Images/PlayerLeft.png');
 }
 
 function textBox1(){
-  text("Hey you. I need your help!", 405, 230);
-  text("I lost my blanket somewhere around here.", 405, 270);
-  text("Could you help me find it?", 405, 310);
-  text("If I don't find it soon, I won't be able to sleep tonight...", 405, 350);
-  text("Please help me, dear stranger.", 405, 390);
+  text("Hey...", 405, 230);
+  text("Some bully took my backpack.", 405, 270);
+  text("I don't think I can get it back by myself.", 405, 310);
+  text("My mom is gonna be very mad at me if I get home without it.", 405, 350);
+  text("You can help me, since you are older than me.", 405, 390);
 }
 function textBox2(){
-  text("Well now I am gonna be cold at night...", 405, 230);
-  text("I guess you are just a selfish person.", 405, 270);
-  text("Goodbye.", 405, 310);
+  text("Well, I hope my mom doesn't hit me when I get home...", 405, 230);
+  text("I guess you have something important to tend to.", 405, 270);
+  text("Bye...", 405, 310);
 }
 function textBox3(){
-  text("Thank you so much! You're very kind.", 405, 230);
-  text("I believe it was somewhere around the tall gray building to the east.", 405, 270);
-  text("Good luck finding it!", 405, 310);
-  text("Thank you again, kind stranger!", 405, 350);
+  text("Wow, really? You want to help me?", 405, 230);
+  text("My bully usually hides it somewhere around the school.", 405, 270);
+  text("I hope you find it.", 405, 310);
+  text("Thanks a lot.", 405, 350);
 }
 function textBox4(){
-  text("You found it! Thank you so much!", 405, 230);
-  text("Now I can finally sleep well tonight.", 405, 270);
-  text("You are a true hero!", 405, 310);
+  text("You really found it! Thanks!", 405, 230);
+  text("Now I can get home without worry.", 405, 270);
+  text("You are my hero!", 405, 310);
 }
 
 function draw() {
@@ -75,8 +79,13 @@ function draw() {
   }
 
   //Quest Giver
-  fill(255)
-  image(questGiver, questX-4, questY, 57, 81);
+  if(window.page1MiniChoice === "complete" && window.page1Choice === "good") {
+    image(questGiverHappy, questX-4, questY, 57, 81);
+  }
+  else{
+    image(questGiver, questX-4, questY, 57, 81);
+  }
+  
 
   //Quest Emotion:
 
@@ -131,23 +140,21 @@ function draw() {
 
   strokeWeight(1)
 
-  // Quest Item (Blanket)
+  // Quest Item (Backpack)
   if (window.page1MiniChoice === "true") {
-    fill(255, 0, 0);
-    image(questItem, questItemX, questItemY, 54, 83);
+    image(questItem, questItemX, questItemY, 29*1.2, 34*1.2);
   }
   if (window.page1MiniChoice === "true" && dist(playerX, playerY, questItemX+27, questItemY+41.5) < 40) {
     setMiniChoice('page1MiniChoice', "complete");
   }
   
-  //Quest Hider (Barrel)
-  fill(0)
-  image(questBarrel, questBarrelX, questBarrelY, 68, 90);
+  //Quest Hider (Boulder)
+  image(questBoulder, questBoulderX, questBoulderY, 100, 90);
 
   if (window.page1MiniChoice === "true" && dist(playerX, playerY, questItemX+34, questItemY+45) < 150) {
-    questBarrelX -= 1.5
-    if (questBarrelX < 1450){
-      questBarrelX = 1450
+    questBoulderX += 1.5
+    if (questBoulderX > 180){
+      questBoulderX = 180
     }
   }
 

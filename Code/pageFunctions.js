@@ -13,9 +13,6 @@ function roadBoundaries(){
 
 //Player and Movement
 function playerMovement(){
-    fill(255);
-    circle(playerX, playerY, 50);
-
     if (keyIsDown(87) === true || keyIsDown(38) === true){
     playerY -= 5
     }
@@ -27,6 +24,22 @@ function playerMovement(){
     }
     if (keyIsDown(68) === true || keyIsDown(39) === true){
     playerX += 5
+    }
+
+    if (keyIsDown(83) === true || keyIsDown(40) === true){
+      image(player, playerX-26, playerY-50, 50*1.2, 80*1.2);
+    }
+    else if (keyIsDown(87) === true || keyIsDown(38) === true){
+      image(playerUp, playerX-26, playerY-50, 50*1.2, 80*1.2);
+    }
+    else if (keyIsDown(68) === true || keyIsDown(39) === true){
+      image(player, playerX-26, playerY-50, 50*1.2, 80*1.2);
+    }
+    else if (keyIsDown(65) === true || keyIsDown(37) === true){
+      image(playerLeft, playerX-26, playerY-50, 50*1.2, 80*1.2);
+    }
+    else {
+      image(player, playerX-26, playerY-50, 50*1.2, 80*1.2);
     }
 }
 
@@ -54,7 +67,7 @@ function npcTextbox(miniChoiceVarName, choiceVarName) {
   let pageMiniChoice = window[miniChoiceVarName];
   let pageChoice = window[choiceVarName];
 
-  if (dist(playerX, playerY, questX+25, questY+25) < 100) {
+  if (dist(playerX, playerY, questX+35, questY+60) < 100) {
     if (!buttonVisible && (pageMiniChoice === "" || pageMiniChoice === undefined)) {
       buttonOptionA = createButton('Sure, I can help you');
       buttonOptionA.position(width/2-160, 500);
@@ -113,8 +126,8 @@ function winCheck() {
   if ((page1Choice === "good" || page1Choice === "bad") && (page2Choice === "good" || page2Choice === "bad") && (page3Choice === "good" || page3Choice === "bad")) {
     fill(0, 255, 0,)
     strokeWeight(3)
-    rect(width/2-25, height/2+195, 50, 50);
-    if (dist(playerX, playerY, width/2, height/2+220) < 50) {
+    rect(width/2-25, height/2+325, 50, 50);
+    if (dist(playerX, playerY, width/2, height/2+350) < 50) {
       window.location.href = "endScreen.html";
     }
   }
